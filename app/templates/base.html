@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kri-dou | {% block title %} Base {% endblock title %}</title>
+    <title>kri-dou | {% block title %} base {% endblock title %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="bg-dark container-fluid">
+<body class="bg-dark container-fluid d-flex flex-column">
     <div class="row">
-        <div class="col">
+        <div class="col p-0">
             {% include 'nav.html' %}
         </div>
     </div>
@@ -19,8 +19,8 @@
             {% endblock header %}
         </div>
     </div>
-    <div class="row h-100">
-        <div class="col h-100">
+    <div class="row flex-grow-1">
+        <div class="col">
             {% block content %}
             {% endblock content %}
         </div>
