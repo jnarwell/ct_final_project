@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} sign up {% endblock title %}
+
+{% block content %}
+<div class="col">
+    <div class="card mt-3 bg-dark border-0 text-light d-flex">
+        <div class="card-body align-self-center w-75">
+            <h1>create your account</h1>
+            <form action="" method="post">
+                {{ form.csrf_token }}
+
+                {{ form.first_name.label }}
+                {{ form.first_name(class='form-control mb-3', placeholder='enter first name') }}
+        
+                {{ form.last_name.label }}
+                {{ form.last_name(class='form-control mb-3', placeholder='enter last name') }}
+        
+                {{ form.username.label }}
+                {{ form.username(class='form-control mb-3', placeholder='enter username') }}
+        
+                {{ form.email.label }}
+                {{ form.email(class='form-control mb-3', placeholder='enter email') }}
+        
+                {{ form.password.label }}
+                {{ form.password(class='form-control mb-3', placeholder='enter password') }}
+        
+                {{ form.confirm_pass.label }}
+                {{ form.confirm_pass(class='form-control mb-3', placeholder='confirm password') }}
+
+                {{ form.submit(class='btn btn-outline-primary w-100 mt-3') }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

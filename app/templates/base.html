@@ -8,15 +8,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="bg-dark container-fluid d-flex flex-column">
+    {% include 'nav.html' %}
     <div class="row">
         <div class="col p-0">
-            {% include 'nav.html' %}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {% block header %}
-            {% endblock header %}
+            {% include 'alerts.html' %}
         </div>
     </div>
     <div class="row flex-grow-1">

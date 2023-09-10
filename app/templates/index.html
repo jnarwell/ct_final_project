@@ -16,12 +16,12 @@
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary btn-lg w-75">Sign Up</button>
-                        </div>
-                        <div class="col d-flex justify-content-start">
-                            <button type="button" class="btn btn-primary btn-lg w-75">Login</button>
-                        </div>
+                        <form action="{{ url_for('signup') }}" class="col d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary btn-lg w-75">Sign Up</button>
+                        </form>
+                        <form action="{{ url_for('login') }}" class="col d-flex justify-content-start">
+                            <button type="submit" class="btn btn-primary btn-lg w-75">Login</button>
+                        </form>
                     </div>
                 </div>
         </div>
