@@ -57,4 +57,9 @@ class Dilemma(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String, nullable=False)
-    #image_url = db.Column(db.String, nullable=False) maybe add if wanna add images
+    c_score = db.Column(db.Float, nullable=False, default=0)
+    d_score = db.Column(db.Float, nullable=False, default=0)
+    v_score = db.Column(db.Float, nullable=False, default=0)
+    n_score = db.Column(db.Float, nullable=False, default=0)
+    choice_a = db.Column(db.String(25), nullable=False)
+    choice_b = db.Column(db.String(25), nullable=False)

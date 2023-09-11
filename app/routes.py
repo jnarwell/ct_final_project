@@ -3,6 +3,7 @@ from flask import render_template, redirect, url_for, flash
 from app.forms import SignUpForm, LoginForm
 from app.models import User
 from flask_login import login_user, logout_user, login_required, current_user
+from dilemma_list import add_dilemmas
 
 @app.route('/')
 def index():
@@ -62,3 +63,7 @@ def login():
             return redirect(url_for('login'))
             
     return render_template('login.html', form=form)
+
+@app.route('/hidden')
+def hidden():
+    add_dilemmas()
