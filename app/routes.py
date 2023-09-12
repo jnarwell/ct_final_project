@@ -5,6 +5,7 @@ from app.models import User, Dilemma
 from flask_login import login_user, logout_user, login_required, current_user
 from app.dilemma_list import add_dilemmas
 from random import randint
+import wikipedia
 
 @app.route('/')
 def index():
@@ -42,9 +43,21 @@ def ponder():
 
 @app.route('/profile', methods=["GET", "POST"])
 def profile():
-    scores = {'consequentialism':current_user.c_score,'deontology':current_user.d_score,'virtue ethics':current_user.v_score,'nihilism':current_user.n_score}
-    ethic=max(scores)
-    return render_template('profile.html', ethic=ethic)
+    scores = {'consequentialism':current_user.c_score,'deontology':current_user.d_score,'virtue_ethics':current_user.v_score,'nihilism':current_user.n_score}
+    max_score = scores['consequentialism']
+    ethic = 'consequentialism'
+    for _ethic, score in scores.items():
+        print(score)
+        print(_ethic)
+        if score > max_score:
+            ethic = _ethic
+            max_score = score
+    pract = {'consequentialism': ['niccolò machiavelli', 'jeremy bentham', 'peter singer'],
+    'deontology': ['immanuel kant', 'w. d. ross', 't. m. scanlon'],
+    'virtue_ethics': ['aristotle', 'thomas aquinas', 'elizabeth anscombe'],
+    'nihilism': ['friedrich Heinrich Jacobi', 'søren Kierkegaard', 'friedrich nietzsche']}
+
+    return render_template('profile.html', ethic=ethic, pract=pract, wikipedia=wikipedia)
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():

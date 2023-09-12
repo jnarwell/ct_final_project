@@ -1,3 +1,8 @@
 body{
     height: 100vh;
 }
+
+.carosel-img{
+    /* margin-left: 8vw; */
+    max-width:25vw;
+}
