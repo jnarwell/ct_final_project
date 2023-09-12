@@ -83,6 +83,9 @@ dilemma_list.append(robinhood_poor)
 acidental_samaritan = Dillema_('accidental samaritan', "you are in a terrible car crash. you were on your phone while driving and accidentally drifted into oncoming traffic. you strike another car. after the dust settles you discover that the driver of the other car is fine but their passenger is dead. the other driver, however, seems to think that they are responsible for the action. when the police show up the other driver says that she is responsible for the accident. she will undoubtly face five years imprsonement. you can say nothing, return to your life, and the woman will go to prison believing she was responsible. you can, alternatively, speak up, facing the prison sentance yourself.", 'speak up', 'do nothing', 0, 1, 1, -1)
 dilemma_list.append(acidental_samaritan)
 
+test_end = Dillema_('end of test', "the test is over. please go to the 'profile' page to see your results and reset", 'do nothing', 'do nothing', 0, 0, 0, 0)
+dilemma_list.append(test_end)
+
 total_c = sum([abs(i.scores['c']) for i in dilemma_list])
 total_d = sum([abs(i.scores['d']) for i in dilemma_list])
 total_v = sum([abs(i.scores['v']) for i in dilemma_list])

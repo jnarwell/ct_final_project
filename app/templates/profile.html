@@ -4,6 +4,9 @@
 
 {% block header %}
         <div class="d-flex justify-content-end me-2">
+            <form action="{{ url_for('reset') }}">
+                <button type="submit" class="btn btn-danger me-1">reset</button>
+            </form>
             <form action="{{ url_for('ponder') }}">
                 <button type="submit" class="btn btn-secondary me-1">ponder</button>
             </form>
@@ -16,11 +19,11 @@
 {% block content %}
     <div class="container text-light d-flex flex-column h-100">
         <div class="row">
-            <h1>you are most aligned with {{ ethic.replace('_', ' ') }}</h1>
+            <h1>you answers are most aligned with {{ ethic.replace('_', ' ') }}</h1>
             {% if ethic == 'nihilism' %}
-                <p class="mt-2">{{ wikipedia.page(pageid=21663).summary.splitlines()[0].lower() }}</p>
+                <h5 class="mt-2 px-5 me-2 fst-italic">{{ wikipedia.page(pageid=21663).summary.splitlines()[0].lower() }}</h5>
             {% else %}
-                <p class="mt-2">{{ wikipedia.page(ethic).summary.splitlines()[0].lower() }}</p>
+                <h5 class="mt-2 px-5 me-2 fst-italic">{{ wikipedia.page(ethic).summary.splitlines()[0].lower() }}</h5>
             {% endif %}
         </div>
         <div class="row mt-3">
@@ -34,7 +37,11 @@
                                     <div class="col-6"><img src="{{ wikipedia.page(person).images[0] }}" class="d-block carosel-img" alt="..."></div>
                                     <div class="col-5">
                                         <h1>{{ person.lower() }}</h1>
-                                        <p>{{ wikipedia.page(person).summary.splitlines()[0].lower() }}</p>
+                                        {% if wikipedia.page(person).summary[:1500][-1] !='.' %}
+                                        <p>{{ wikipedia.page(person).summary[:1500].lower()+'...' }}</p>
+                                        {% else %}
+                                        <p>{{ wikipedia.page(person).summary[:1500].lower() }}</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +51,11 @@
                                     <div class="col-6"><img src="{{ wikipedia.page(person).images[0] }}" class="d-block carosel-img" alt="..."></div>
                                     <div class="col-5">
                                         <h1>{{ person.lower() }}</h1>
-                                        <p>{{ wikipedia.page(person).summary.splitlines()[0].lower() }}</p>
+                                        {% if wikipedia.page(person).summary[:1500][-1] !='.' %}
+                                        <p>{{ wikipedia.page(person).summary[:1500].lower()+'...' }}</p>
+                                        {% else %}
+                                        <p>{{ wikipedia.page(person).summary[:1500].lower() }}</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

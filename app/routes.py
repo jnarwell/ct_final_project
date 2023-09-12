@@ -19,7 +19,7 @@ def index():
 @login_required
 def ponder():
     if current_user.last_dilemma > db.session.query(Dilemma).count():
-        dilemma = Dilemma.query.filter_by(id=1).first()
+        dilemma = Dilemma.query.filter_by(id=24).first()
     else:
         dilemma = Dilemma.query.filter_by(id=current_user.last_dilemma).first()
 
@@ -47,8 +47,6 @@ def profile():
     max_score = scores['consequentialism']
     ethic = 'consequentialism'
     for _ethic, score in scores.items():
-        print(score)
-        print(_ethic)
         if score > max_score:
             ethic = _ethic
             max_score = score
@@ -114,3 +112,14 @@ def login():
 def hidden():
     add_dilemmas()
     return make_response('hello')
+
+@app.route('/reset')
+def reset():
+    print(current_user.c_score)
+    current_user.last_dilemma = 1
+    current_user.c_score = 0
+    current_user.d_score = 0
+    current_user.v_score = 0
+    current_user.n_score = 0
+    db.session.commit()
+    return redirect(url_for('ponder'))
