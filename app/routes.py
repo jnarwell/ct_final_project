@@ -1,17 +1,50 @@
 from app import app, db
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, make_response, request
 from app.forms import SignUpForm, LoginForm
-from app.models import User
+from app.models import User, Dilemma
 from flask_login import login_user, logout_user, login_required, current_user
-from dilemma_list import add_dilemmas
+from app.dilemma_list import add_dilemmas
+from random import randint
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if current_user.is_authenticated == True:
+        return redirect('/ponder')
+    else:
+        title = Dilemma.query.filter_by(id=randint(1,23)).first().title
+        return render_template('index.html', title=title)
 
-@app.route('/ponder')
+@app.route('/ponder', methods=["GET", "POST"])
+@login_required
 def ponder():
-    return render_template('ponder.html')
+    if current_user.last_dilemma > db.session.query(Dilemma).count():
+        dilemma = Dilemma.query.filter_by(id=1).first()
+    else:
+        dilemma = Dilemma.query.filter_by(id=current_user.last_dilemma).first()
+
+    if request.method == 'POST':
+        if 'choice_a' in request.form:
+            current_user.c_score += dilemma.c_score
+            current_user.d_score += dilemma.d_score
+            current_user.v_score += dilemma.v_score
+            current_user.n_score += dilemma.n_score
+        if 'choice_b' in request.form:
+            current_user.c_score -= dilemma.c_score
+            current_user.d_score -= dilemma.d_score
+            current_user.v_score -= dilemma.v_score
+            current_user.n_score -= dilemma.n_score
+
+        current_user.last_dilemma += 1
+        db.session.commit()
+        return redirect('/ponder')
+    else:
+        return render_template('ponder.html', dilemma=dilemma)
+
+@app.route('/profile', methods=["GET", "POST"])
+def profile():
+    scores = {'consequentialism':current_user.c_score,'deontology':current_user.d_score,'virtue ethics':current_user.v_score,'nihilism':current_user.n_score}
+    ethic=max(scores)
+    return render_template('profile.html', ethic=ethic)
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -32,7 +65,7 @@ def signup():
         db.session.commit()
         flash(f'{new_user.username} has been created', 'success')
         login_user(new_user)
-        return redirect(url_for('index'))
+        return redirect(url_for('ponder'))
     elif form.is_submitted():
         flash("Your passwords do not match", 'danger')
         return redirect(url_for('signup'))
@@ -57,7 +90,7 @@ def login():
         if user is not None and user.check_password(password):
             login_user(user)
             flash("You have successfully logged in", 'primary')
-            return redirect(url_for('index'))
+            return redirect(url_for('ponder'))
         else:
             flash('Invalid username and/or password', 'danger')
             return redirect(url_for('login'))
@@ -67,3 +100,4 @@ def login():
 @app.route('/hidden')
 def hidden():
     add_dilemmas()
+    return make_response('hello')

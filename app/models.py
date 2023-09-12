@@ -13,6 +13,11 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(75), nullable=False, unique=True)
     username = db.Column(db.String(75), nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
+    c_score = db.Column(db.Float, nullable=False, default=0)
+    d_score = db.Column(db.Float, nullable=False, default=0)
+    v_score = db.Column(db.Float, nullable=False, default=0)
+    n_score = db.Column(db.Float, nullable=False, default=0)
+    last_dilemma = db.Column(db.Integer, db.ForeignKey('dilemma.id'), nullable=False, default=1)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
@@ -57,9 +62,25 @@ class Dilemma(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String, nullable=False)
+    choice_a = db.Column(db.String(25), nullable=False)
+    choice_b = db.Column(db.String(25), nullable=False)
     c_score = db.Column(db.Float, nullable=False, default=0)
     d_score = db.Column(db.Float, nullable=False, default=0)
     v_score = db.Column(db.Float, nullable=False, default=0)
     n_score = db.Column(db.Float, nullable=False, default=0)
-    choice_a = db.Column(db.String(25), nullable=False)
-    choice_b = db.Column(db.String(25), nullable=False)
+
+    def __repr__(self):
+        return f"<Dilemma {self.id}|{self.title}>"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'choice_a': self.choice_a,
+            'choice_b': self.choice_b,
+            'c_score': self.c_score,
+            'd_score': self.d_score,
+            'v_score': self.v_score,
+            'n_score': self.n_score
+        }

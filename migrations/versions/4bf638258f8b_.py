@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 5218fee94fa4
+Revision ID: 4bf638258f8b
 Revises: 
-Create Date: 2023-09-11 09:48:15.598451
+Create Date: 2023-09-11 18:08:15.827482
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5218fee94fa4'
+revision = '4bf638258f8b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,6 +22,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
+    sa.Column('choice_a', sa.String(length=25), nullable=False),
+    sa.Column('choice_b', sa.String(length=25), nullable=False),
     sa.Column('c_score', sa.Float(), nullable=False),
     sa.Column('d_score', sa.Float(), nullable=False),
     sa.Column('v_score', sa.Float(), nullable=False),
@@ -35,9 +37,15 @@ def upgrade():
     sa.Column('email', sa.String(length=75), nullable=False),
     sa.Column('username', sa.String(length=75), nullable=False),
     sa.Column('password', sa.String(), nullable=False),
+    sa.Column('c_score', sa.Float(), nullable=False),
+    sa.Column('d_score', sa.Float(), nullable=False),
+    sa.Column('v_score', sa.Float(), nullable=False),
+    sa.Column('n_score', sa.Float(), nullable=False),
+    sa.Column('last_dilemma', sa.Integer(), nullable=False),
     sa.Column('date_created', sa.DateTime(), nullable=False),
     sa.Column('token', sa.String(length=32), nullable=True),
     sa.Column('token_expiration', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['last_dilemma'], ['dilemma.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')

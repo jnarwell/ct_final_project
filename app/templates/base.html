@@ -14,6 +14,12 @@
             {% include 'alerts.html' %}
         </div>
     </div>
+    <div class="row">
+        <div class="col p-0">
+            {% block header %}
+            {% endblock header %}
+        </div>
+    </div>
     <div class="row flex-grow-1">
         <div class="col">
             {% block content %}

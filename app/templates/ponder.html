@@ -2,13 +2,26 @@
 
 {% block title %} ponder {% endblock title %}
 
+{% block header %}
+        <div class="d-flex justify-content-end me-2">
+            <form action="{{ url_for('profile') }}">
+                <button type="submit" class="btn btn-secondary me-1">profile</button>
+            </form>
+            <form action="{{ url_for('logout') }}">
+                <button type="submit" class="btn btn-secondary me-1">log out</button>
+            </form>
+        </div>
+{% endblock header %}
+
 {% block content %}
     <div class="container text-light d-flex flex-column h-100 justify-content-center">
-        <div class="row mt-5"><h1>title</h1></div>
-        <div class="row mt-5 h-50 align-self-center"><h4>description</h4></div>
-        <div class="row mt-5 mb-auto d-flex justify-content-evenly">
-            <button type="button" class="btn btn-secondary btn-lg w-25">choice a</button>
-            <button type="button" class="btn btn-secondary btn-lg w-25">choice a</button>
+        <div class="row mt-5"><h1>{{ dilemma.title }}</h1></div>
+        <div class="row mt-5 h-50 align-self-center"><h4>{{ dilemma.description }}</h4></div>
+        <div class="row mt-5 mb-auto">
+            <form method="post" class="d-flex justify-content-evenly">
+                <input type="submit" value="{{ dilemma.choice_a }}" name="choice_a" class="btn btn-secondary btn-lg w-25"></input>
+                <input type="submit" value="{{ dilemma.choice_b }}" name="choice_b" class="btn btn-secondary btn-lg w-25"></input>
+            </form>
         </div>
     </div>
 {% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} profile {% endblock title %}
+
+{% block header %}
+        <div class="d-flex justify-content-end me-2">
+            <form action="{{ url_for('ponder') }}">
+                <button type="submit" class="btn btn-secondary me-1">ponder</button>
+            </form>
+            <form action="{{ url_for('logout') }}">
+                <button type="submit" class="btn btn-secondary me-1">log out</button>
+            </form>
+        </div>
+{% endblock header %}
+
+{% block content %}
+    <div class="container text-light d-flex flex-column h-100">
+        <h1>You are most aligned with {{ ethic }}</h1>
+    </div>
+{% endblock content %}
